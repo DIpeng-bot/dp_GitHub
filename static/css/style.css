@@ -1,0 +1,371 @@
+:root {
+    --primary-color: #0071E3;
+    --background-color: #FBFBFD;
+    --card-background: #FFFFFF;
+    --text-color: #1D1D1F;
+    --secondary-text: #86868B;
+    --border-color: #E5E5E7;
+    --border-radius: 12px;
+    --spacing: 24px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing);
+}
+
+.header {
+    text-align: center;
+    margin: 48px 0;
+    padding: 0 20px;
+}
+
+.header h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #0071E3, #40B0FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.header p {
+    font-size: 21px;
+    color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.main-content {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+}
+
+.upload-section {
+    background: var(--card-background);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-color);
+    width: 260px;
+    height: fit-content;
+    position: sticky;
+    top: 24px;
+}
+
+.upload-section h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+.magazines-section {
+    flex: 1;
+    padding-top: 6px;
+}
+
+.filter-section {
+    display: inline-flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    background: var(--card-background);
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+select {
+    padding: 6px 28px 6px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #F5F5F7;
+    font-size: 13px;
+    outline: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+    width: 100px;
+}
+
+select:hover {
+    border-color: var(--primary-color);
+    background-color: white;
+}
+
+select:focus {
+    border-color: var(--primary-color);
+    background-color: white;
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+}
+
+.magazine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.magazine-card {
+    background: var(--card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+}
+
+.magazine-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+}
+
+.cover-image {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    background-color: #F5F5F7;
+    overflow: hidden;
+}
+
+.cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.cover-image img:hover {
+    transform: scale(1.05);
+}
+
+.no-cover {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0071E3, #40B0FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-cover span {
+    font-size: 32px;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.magazine-info {
+    padding: 12px;
+}
+
+.magazine-card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.magazine-info p {
+    font-size: 11px;
+    color: var(--secondary-text);
+    margin-bottom: 4px;
+}
+
+.format-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.format-badge.pdf {
+    background-color: #FF3B30;
+    color: white;
+}
+
+.format-badge.epub {
+    background-color: #5856D6;
+    color: white;
+}
+
+.button-group {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.view-btn:hover {
+    background-color: #0077ED;
+    transform: translateY(-1px);
+}
+
+.save-btn {
+    background-color: #34C759;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #30B753;
+    transform: translateY(-1px);
+}
+
+.delete-btn {
+    background-color: #FF3B30;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #FF2D55;
+    transform: translateY(-1px);
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+input[type="text"] {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: var(--transition);
+    background-color: #F5F5F7;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+    background-color: white;
+}
+
+input[type="file"] {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #F5F5F7;
+    cursor: pointer;
+    width: 100%;
+}
+
+.flash-messages {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 320px;
+}
+
+.flash-message {
+    padding: 16px 20px;
+    border-radius: var(--border-radius);
+    background-color: #34C759;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+}
+
+.flash-message.error {
+    background-color: #FF3B30;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.upload-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.upload-btn:hover {
+    background-color: #0077ED;
+    transform: translateY(-1px);
+}
+
+small {
+    font-size: 12px;
+    color: var(--secondary-text);
+} 

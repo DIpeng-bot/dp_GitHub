@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# 上传的文件
+static/uploads/*
+!static/uploads/.gitkeep
+
+# 数据库文件
+*.db
+*.sqlite3
+
+# 系统文件
+.DS_Store
+Thumbs.db

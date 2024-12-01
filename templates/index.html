@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杂志图书馆</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>杂志图书馆</h1>
+            <p>优雅地管理和阅读您的杂志收藏</p>
+        </header>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="main-content">
+            <section class="upload-section">
+                <form class="upload-form" action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" id="title" name="title" required placeholder="杂志标题">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="category" name="category" placeholder="分类">
+                    </div>
+                    <div class="form-group">
+                        <input type="file" id="file" name="file" accept=".pdf,.epub" required onchange="updateTitle(this)">
+                        <small style="color: var(--secondary-text);">支持 PDF 和 EPUB 格式</small>
+                    </div>
+                    <button type="submit" class="upload-btn">上传</button>
+                </form>
+            </section>
+
+            <section class="magazines-section">
+                <div class="filter-section">
+                    <select id="categoryFilter" onchange="applyFilters()">
+                        <option value="all" {% if current_category == 'all' %}selected{% endif %}>所有分类</option>
+                        {% for category in categories %}
+                            <option value="{{ category }}" {% if current_category == category %}selected{% endif %}>
+                                {{ category }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <select id="formatFilter" onchange="applyFilters()">
+                        <option value="all" {% if current_format == 'all' %}selected{% endif %}>所有格式</option>
+                        <option value="pdf" {% if current_format == 'pdf' %}selected{% endif %}>PDF</option>
+                        <option value="epub" {% if current_format == 'epub' %}selected{% endif %}>EPUB</option>
+                    </select>
+                </div>
+
+                <div class="magazine-grid">
+                    {% for magazine in magazines %}
+                    <div class="magazine-card">
+                        <div class="cover-image">
+                            {% if magazine[6] %}
+                                <img src="{{ url_for('static', filename='covers/' + magazine[6]) }}" alt="{{ magazine[1] }} 封面" loading="lazy">
+                            {% else %}
+                                <div class="no-cover">
+                                    <span>{{ magazine[1][:2] }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="magazine-info">
+                            <h3>{{ magazine[1] }}</h3>
+                            <p>分类: {{ magazine[3] }}</p>
+                            <p>
+                                格式: 
+                                <span class="format-badge {{ magazine[4].lower() }}">
+                                    {{ magazine[4] }}
+                                </span>
+                            </p>
+                            <div class="button-group">
+                                <a href="{{ url_for('static', filename='uploads/' + magazine[2]) }}" target="_blank">
+                                    <button class="view-btn">查看</button>
+                                </a>
+                                <a href="{{ url_for('download_magazine', id=magazine[0]) }}">
+                                    <button class="save-btn">保存</button>
+                                </a>
+                                <a href="{{ url_for('delete_magazine', id=magazine[0]) }}" onclick="return confirm('确定要删除《{{ magazine[1] }}》吗？');">
+                                    <button class="delete-btn">删除</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            const format = document.getElementById('formatFilter').value;
+            window.location.href = `/filter?category=${category}&format=${format}`;
+        }
+
+        function updateTitle(fileInput) {
+            if (fileInput.files && fileInput.files[0]) {
+                const fileName = fileInput.files[0].name;
+                const titleWithoutExt = fileName.replace(/\.[^/.]+$/, "");
+                
+                const beautifiedTitle = titleWithoutExt
+                    .replace(/[_-]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                
+                document.getElementById('title').value = beautifiedTitle;
+            }
+        }
+
+        // 添加渐隐效果
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(message => {
+            setTimeout(() => {
+                message.style.opacity = '0';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            }, 3000);
+        });
+    </script>
+</body>
+</html> 
