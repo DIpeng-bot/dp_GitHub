@@ -62,8 +62,8 @@
                     {% for magazine in magazines %}
                     <div class="magazine-card">
                         <div class="cover-image">
-                            {% if magazine[6] %}
-                                <img src="{{ url_for('static', filename='covers/' + magazine[6]) }}" alt="{{ magazine[1] }} 封面" loading="lazy">
+                            {% if magazine[7] %}
+                                <img src="{{ url_for('static', filename='covers/' + magazine[7]) }}" alt="{{ magazine[1] }} 封面" loading="lazy">
                             {% else %}
                                 <div class="no-cover">
                                     <span>{{ magazine[1][:2] }}</span>
